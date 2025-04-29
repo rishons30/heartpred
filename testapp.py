@@ -1,19 +1,33 @@
 import requests
 
 # URL of your Flask server
-url = 'http://127.0.0.1:5000/predict'
+base_url = 'http://127.0.0.1:5000/predict'
 
-# High risk feature values
 data = {
     'features': [0.6, 1, 0.3, 0.24, 0.36, 0, 0, 0.6, 0, 0.29, 0.5, 0, 0.67]
 }
 
+# Endpoints for each model
+endpoints = {
+    'Random Forest (GridSearchCV)': '/rf-gscv',
+    'Random Forest (RandomizedSearchCV)': '/rf-rscv',
+    'XGBoost': '/xgb'
+}
 
+# Store results
+results = {}
 
-# (normalized values: high age, male, bad chest pain, high BP, high cholesterol, high sugar, abnormal ECG, low heart rate, exercise angina, high oldpeak, flat slope, major vessels, thal defect)
+# Send POST requests to each model endpoint
+for model_name, endpoint in endpoints.items():
+    url = base_url + endpoint
+    response = requests.post(url, json=data)
+    
+    if response.status_code == 200:
+        results[model_name] = response.json()
+    else:
+        results[model_name] = {"error": response.json().get("error", "Unknown error")}
 
-# Send POST request
-response = requests.post(url, json=data)
+# Print results
+for model_name, result in results.items():
+    print(f"{model_name}: {result}")
 
-# Print response
-print(response.json())
