@@ -1,5 +1,4 @@
-
-import { Line } from "react-chartjs-2"; // ✅ Import Line chart
+import { Line } from "react-chartjs-2";
 import { motion } from "framer-motion";
 import {
   Chart as ChartJS,
@@ -12,14 +11,13 @@ import {
   Legend,
 } from "chart.js";
 
+// Register ChartJS components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-
-
-const data={
-
+// Chart Data
+const data = {
   labels: ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022"],
-datasets: [
+  datasets: [
     {
       label: "Heart Disease Cases (millions)",
       data: [5, 5.5, 6, 6.8, 7.5, 8.2, 9, 9.8],
@@ -30,7 +28,20 @@ datasets: [
   ],
 };
 
+// Plugin to set canvas background color
+const backgroundPlugin = {
+  id: "custom_canvas_background_color",
+  beforeDraw: (chart) => {
+    const ctx = chart.canvas.getContext("2d");
+    ctx.save();
+    ctx.globalCompositeOperation = "destination-over";
+    ctx.fillStyle = "#1e1e1e"; // dark gray
+    ctx.fillRect(0, 0, chart.width, chart.height);
+    ctx.restore();
+  },
+};
 
+// Chart Options
 const options = {
   responsive: true,
   animation: {
@@ -39,11 +50,11 @@ const options = {
   },
   plugins: {
     legend: {
-      display: false,  // hide legend
+      display: false,
     },
     title: {
       display: true,
-      text: "Heart Disease Cases Over Years",  // your chart title
+      text: "Heart Disease Cases Over Years",
       color: "#ffffff",
       font: {
         size: 18,
@@ -67,24 +78,18 @@ const options = {
   },
 };
 
-
-
-
-
+// React Component
 const Stat = () => {
   return (
     <motion.div
-      className="stat-container"
-      initial={{ opacity: 0, y: 50 }} // animation: start invisible and lower
-      animate={{ opacity: 1, y: 0 }}  // animation: fade in and slide up
-      transition={{ duration: 1 }}    // takes 1 second
-      style={{ maxWidth: "1000px", margin: "0 auto", padding: "40px 20px" }}
+      className="stat-container dark-bg"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
     >
-      <Line data={data} options={options} />
+      <Line data={data} options={options} plugins={[backgroundPlugin]}  />
     </motion.div>
   );
 };
 
-
-
-export default Stat
+export default Stat;

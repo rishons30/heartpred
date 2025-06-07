@@ -112,7 +112,7 @@ const HeartForm = () => {
       </div>
 
       <div className="form-group">
-        <label htmlFor="fbs">Fasting Blood Sugar > 120 mg/dl</label>
+        <label htmlFor="fbs">Fasting Blood Sugar  120 mg/dl</label>
         <select name="fbs" id="fbs" value={formData.fbs} onChange={handleChange} required>
           <option value="0">False</option>
           <option value="1">True</option>
