@@ -1,0 +1,10 @@
+/* index.css or App.css */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.5s ease, color 0.5s ease;
+  background-color: inherit; /* so inline JS styles take precedence */
+  color: inherit; /* same for text color */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* optional, nicer font */
+}
