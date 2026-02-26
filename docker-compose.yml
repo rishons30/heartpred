@@ -1,0 +1,15 @@
+services:
+  backend:
+    build: ./backend
+    container_name: heart-backend
+    ports:
+      - "5000:5000"
+
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: heart-frontend
+    ports:
+      - "3000:80" # map host 3000 → container 80
+    restart: unless-stopped
