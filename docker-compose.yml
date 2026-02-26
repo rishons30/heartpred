@@ -11,5 +11,5 @@ services:
     build: ./frontend
     container_name: heart-frontend
     ports:
-      - "3000:80" # map host 3000 → container 80
+      - "80:80" # map host 3000 → container 80
     restart: unless-stopped
